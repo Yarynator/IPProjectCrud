@@ -1,0 +1,4 @@
+vendor/
+composer.lock
+
+includes/LocalConfig.class.php
