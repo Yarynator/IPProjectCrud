@@ -1,10 +1,13 @@
 <?php
+session_start();
 
 abstract class BasePage
 {
     protected MustacheRunner $m;
     protected string $title;
     protected array $extraHeaders = [];
+
+    private bool $logined;
 
     public function __construct()
     {
@@ -35,7 +38,8 @@ abstract class BasePage
     protected function setUp() : void {}
 
     protected function header() : string {
-        return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders]);
+
+        return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders, logined => $_SESSION["name"]]);
     }
 
     abstract protected function body() : string;

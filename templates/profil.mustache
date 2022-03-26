@@ -1,0 +1,12 @@
+<h1>Profil</h1>
+<h3>Vítej uživateli <strong>{{name}}</strong>. My víme, že tvá oblíbená barva je <span style="color: coral">{{color}}</span>.</h3>
+
+<form action="./changePassword.php">
+    <input type="submit" value="Změnit heslo" class="btn btn-primary">
+</form>
+<br>
+<form action="./changeColor.php">
+    <input type="submit" value="Změnit oblíbenou barvu" class="btn btn-primary">
+</form>
+
+{{#admin}}Jsem admin :){{/admin}}

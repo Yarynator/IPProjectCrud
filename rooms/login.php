@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {
@@ -7,23 +6,32 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
+
+        if($_SESSION["name"])
+            header("Location: ./profil.php");
+
         if(isset($_POST["login"]))
         {
 
             $name = $_POST["name"];
-            $stmt = $this->pdo->prepare("SELECT password FROM 'users' WHERE name='$name'");
-            $stmt->execute();
+            $stmt = $this->pdo->prepare("SELECT password FROM employee WHERE login='$name'");
+            $stmt->execute([]);
 
-            dumpe($stmt);
+            $password = $stmt->fetch()->password;
 
-            /*$_SESSION["name"] = "name";
-            header("Location: ./");*/
+            if(password_verify($_POST["password"], $password)){
+                $_SESSION["name"] = $name;
+
+            } else{
+                //chybova hlaska
+            }
+            header("Location: ./profil.php");
         }
 
         /*$stmt = $this->pdo->prepare("SELECT * FROM `room` ORDER BY `name`");
         $stmt->execute([]);*/
 
-    return $this->m->render("login"/*, ["rooms" => $stmt]*/);
+        return $this->m->render("login");
     }
 }
 

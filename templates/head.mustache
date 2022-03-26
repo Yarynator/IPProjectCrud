@@ -13,3 +13,25 @@
     {{#extraHeaders}}{{{.}}}{{/extraHeaders}}
 </head>
 <body class="container">
+<nav style="
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+">
+    <div>
+        <a href="./" class="btn btn-secondary">Průvodce místností</a>
+        <a href="./" class="btn btn-secondary">Průvodce Lidí</a>
+    </div>
+    <div>
+        {{^logined}}
+        <a href="./login.php" class="btn btn-secondary">Login<a/>
+        <a href="./register.php" class="btn btn-secondary">Register<a/>
+        {{/logined}}
+        {{#logined}}
+            <a href="./profil.php" class="btn btn-secondary">Profil</a>
+            <form style="display: inline-block" action="./logout.php" method="post">
+                <button class="btn btn-secondary">Logout</button>
+            </form>
+        {{/logined}}
+    </div>
+</nav>
