@@ -70,6 +70,9 @@ final class CurrentPage extends BaseDBPage {
     {
         RoomModel::checkLogined();
 
+        if(!$_SESSION["admin"])
+            header("Location: ./");
+
         if ($this->state == self::STATE_FORM_REQUESTED)
             return $this->m->render(
                 "roomForm",

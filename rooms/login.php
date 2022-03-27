@@ -3,6 +3,8 @@ require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {
     protected string $title = "Login";
+    private string $warning = "";
+    private string $name = "";
 
     protected function body(): string
     {
@@ -14,24 +16,31 @@ final class CurrentPage extends BaseDBPage {
         {
 
             $name = $_POST["name"];
-            $stmt = $this->pdo->prepare("SELECT password FROM employee WHERE login='$name'");
+            $stmt = $this->pdo->prepare("SELECT password, admin FROM employee WHERE login='$name'");
             $stmt->execute([]);
 
-            $password = $stmt->fetch()->password;
+            $row = $stmt->fetch();
 
-            if(password_verify($_POST["password"], $password)){
-                $_SESSION["name"] = $name;
-
-            } else{
-                //chybova hlaska
+            $password = $row->password;
+            $admin = $row->admin;
+            
+            if($password) {
+                if(password_verify($_POST["password"], $password)){
+                    $_SESSION["name"] = $name;
+                    $_SESSION["admin"] = $admin;
+                    header("Location: ./profil");
+                } else{
+                    //chybova hlaska
+                    $this->warning = "Špatné heslo!";
+                    $this->name = $name;
+                }
+            } else {
+                $warning = "Špatné uživatelské jméno!";
             }
-            header("Location: ./profil.php");
+            
         }
 
-        /*$stmt = $this->pdo->prepare("SELECT * FROM `room` ORDER BY `name`");
-        $stmt->execute([]);*/
-
-        return $this->m->render("login");
+        return $this->m->render("login", ["warning" => $this->warning, "name" => $this->name]);
     }
 }
 

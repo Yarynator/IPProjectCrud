@@ -9,9 +9,13 @@ final class CurrentPage extends BaseDBPage {
     {
         RoomModel::checkLogined();
 
-        $stmt = $this->pdo->prepare("SELECT * FROM `room` ORDER BY `name`");
+        $room_id = $_GET["roomId"];
+        dump($room_id);
+
+        $stmt = $this->pdo->prepare("SELECT * FROM `room` WHERE room_id=$room_id");
         $stmt->execute([]);
 
+        //TODO: room template
         return $this->m->render("roomList", ["rooms" => $stmt, "admin" => $_SESSION["admin"]]);
     }
 }

@@ -115,7 +115,7 @@ final class RoomModel
     {
         if(!isset($_SESSION["name"]))
         {
-            header("Location: ./login.php");
+            header("Location: ./login");
         }
     }
 }

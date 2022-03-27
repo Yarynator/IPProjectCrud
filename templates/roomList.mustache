@@ -4,7 +4,7 @@
         <th>Name</th>
         <th>Number</th>
         <th>Phone</th>
-        <th>Actions</th>
+        {{#admin}}<th>Actions</th>{{/admin}}
     </tr>
     </thead>
 
@@ -14,19 +14,19 @@
             <td><a href="room.php?roomId={{ room_id }}">{{ name }}</a></td>
             <td>{{ no }}</td>
             <td>{{ phone }}</td>
-            <td>
+            {{#admin}}<td>
                 <form method="post" action="update.php">
                     <input type="hidden" name="room_id" value="{{room_id}}" />
                     <input type="submit" value="Update" class="btn btn-info" />
                 </form>
 
-                <form method="post" action="delete.php" onsubmit="return confirm('Really delete room?\nAction cannot be undone!')">
+                <form class="mt-2" method="post" action="delete.php" onsubmit="return confirm('Really delete room?\nAction cannot be undone!')">
                     <input type="hidden" name="room_id" value="{{room_id}}" />
                     <input type="submit" value="Delete" class="btn btn-danger" />
                 </form>
-            </td>
+            </td>{{/admin}}
         </tr>
     {{/ rooms }}
     </tbody>
 </table>
-<a href="insert.php" class="btn btn-primary">New Room</a>
+{{#admin}}<a href="insert.php" class="btn btn-primary">New Room</a>{{/admin}}

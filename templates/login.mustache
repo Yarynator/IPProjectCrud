@@ -3,7 +3,7 @@
     <table>
         <tr>
             <td><label for="name">Jméno: </label></td>
-            <td><input type="text" id="name" name="name" required></td>
+            <td><input type="text" id="name" name="name" value="{{#name}}{{name}}{{/name}}" required></td>
         </tr><tr>
             <td><label for="password">Heslo: </label></td>
             <td><input type="password" id="password" name="password" required></td>
@@ -12,3 +12,6 @@
         </tr>
     </table>
 </form>
+{{#warning}}
+    <p class="alert alert-danger mt-2">{{warning}}</p>
+{{/warning}}

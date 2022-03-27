@@ -3,6 +3,7 @@ require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {
     protected string $title = "Změnit heslo";
+    private string $warning = "";
 
     protected function body(): string
     {
@@ -26,11 +27,15 @@ final class CurrentPage extends BaseDBPage {
                     $stmt->execute([]);
 
                     header("Location: ./profil.php");
+                } else {
+                    $this->warning = "Hesla se neshodují!";
                 }
+            }else {
+                $this->warning = "Aktuální heslo není správné!";
             }
         }
 
-        return $this->m->render("changePassword");
+        return $this->m->render("changePassword", ["warning" => $this->warning]);
     }
 }
 

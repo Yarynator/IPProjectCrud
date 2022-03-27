@@ -20,16 +20,16 @@
 ">
     <div>
         <a href="./" class="btn btn-secondary">Průvodce místností</a>
-        <a href="./" class="btn btn-secondary">Průvodce Lidí</a>
+        <a href="./pruvodceLidi" class="btn btn-secondary">Průvodce Lidí</a>
     </div>
     <div>
         {{^logined}}
-        <a href="./login.php" class="btn btn-secondary">Login<a/>
-        <a href="./register.php" class="btn btn-secondary">Register<a/>
+        <a href="./login" class="btn btn-secondary">Login<a/>
+        <a href="./register" class="btn btn-secondary">Register<a/>
         {{/logined}}
         {{#logined}}
-            <a href="./profil.php" class="btn btn-secondary">Profil</a>
-            <form style="display: inline-block" action="./logout.php" method="post">
+            <a href="./profil" class="btn btn-secondary">Profil</a>
+            <form style="display: inline-block" action="./logout" method="post">
                 <button class="btn btn-secondary">Logout</button>
             </form>
         {{/logined}}
