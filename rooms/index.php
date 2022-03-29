@@ -6,7 +6,7 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
-        RoomModel::checkLogined();
+        BasePage::checkLogined();
 
         $stmt = $this->pdo->prepare("SELECT * FROM `room` ORDER BY `name`");
         $stmt->execute([]);

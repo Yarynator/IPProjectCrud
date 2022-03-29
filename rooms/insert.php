@@ -68,7 +68,7 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
-        RoomModel::checkLogined();
+        BasePage::checkLogined();
 
         if(!$_SESSION["admin"])
             header("Location: ./");

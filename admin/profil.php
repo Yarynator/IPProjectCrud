@@ -4,10 +4,15 @@ require "../includes/bootstrap.inc.php";
 final class CurrentPage extends BaseDBPage {
     protected string $title = "Profil";
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        BasePage::checkLogined();
+    }
 
     protected function body(): string
     {
-        RoomModel::checkLogined();
 
         $name = $_SESSION["name"];
         $stmt = $this->pdo->prepare("SELECT name, color, admin FROM employee WHERE login='$name'");

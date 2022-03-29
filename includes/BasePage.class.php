@@ -49,4 +49,12 @@ abstract class BasePage
     }
 
     protected function wrapUp() : void {}
+
+    public static function checkLogined() : void
+    {
+        if(!isset($_SESSION["name"]))
+        {
+            header("Location: ../admin");
+        }
+    }
 }

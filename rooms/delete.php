@@ -21,7 +21,7 @@ final class CurrentPage extends BaseDBPage {
     //jinak vrať do formuláře
     public function __construct()
     {
-        RoomModel::checkLogined();
+        BasePage::checkLogined();
 
         parent::__construct();
         $this->title = "Delete room";

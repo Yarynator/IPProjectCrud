@@ -4,13 +4,17 @@ require "../includes/bootstrap.inc.php";
 final class CurrentPage extends BaseDBPage {
     protected string $title = "Logout";
 
-    protected function body(): string
+    protected function setUp(): void
     {
+        parent::setUp();
 
         session_destroy();
         header("Location: ./");
+    }
 
-        return $this->m->render("login", []);
+    protected function body(): string
+    {
+        return "";
     }
 }
 
