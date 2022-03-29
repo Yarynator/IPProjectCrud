@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {
@@ -12,7 +11,7 @@ final class CurrentPage extends BaseDBPage {
         $stmt = $this->pdo->prepare("SELECT * FROM `room` ORDER BY `name`");
         $stmt->execute([]);
 
-        return $this->m->render("roomList", ["rooms" => $stmt, "admin" => $_SESSION["admin"]]);
+        return $this->m->render("roomList", ["rooms" => $stmt, "admin" => isset($_SESSION["admin"]) ? $_SESSION["admin"] : false]);
     }
 }
 

@@ -1,0 +1,51 @@
+{{#warning}}<h1>{{warning}}</h1>{{/warning}}
+{{#employees}}
+<h1>Úprava karty <span class="text-uppercase">{{name}} {{surname}}</span></h1>
+
+<form action="updateEmployee" method="post">
+    <table>
+        <tr>
+            <td><label for="name">Name: </label></td>
+            <td><input type="text" id="name" name="name" value="{{name}}"></td>
+        </tr>
+        <tr>
+            <td><label for="surname">Surname: </label></td>
+            <td><input type="text" id="surname" name="surname" value="{{surname}}"></td>
+        </tr>
+        <tr>
+            <td><label for="job">Job: </label></td>
+            <td><input type="text" id="job" name="job" value="{{job}}"></td>
+        </tr>
+        <tr>
+            <td><label for="wage">Wage: </label></td>
+            <td><input type="text" id="wage" name="wage" value="{{wage}}"></td>
+        </tr>
+        <tr>
+            <td><label for="room">Room Id: </label></td>
+            <td><select name="room" id="room">
+                {{#rooms}}
+                    <option value="{{rooms_id}}">{{name}}</option>
+                {{/rooms}}
+            </select></td>
+        </tr>
+        <tr>
+            <td><label for="login">Login: </label></td>
+            <td><input type="text" id="login" name="login" value="{{login}}"></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password: </label></td>
+            <td><input type="text" id="password" name="password"}"></td>
+        </tr>
+        <tr>
+            <td><label for="admin">Is Admin? </label></td>
+            <td><input type="checkbox" id="admin" name="admin"></td>
+        </tr>
+        <tr>
+            <td><input class="btn btn-primary" type="submit" value="Upravit"></td>
+        </tr>
+    </table>
+</form>
+{{/employees}}
+{{^employees}}
+    <h1>fslk</h1>
+{{/employees}}

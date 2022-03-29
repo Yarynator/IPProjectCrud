@@ -12,14 +12,14 @@
     <tbody>
     {{# employees }}
         <tr>
-            <td><a href="room.php?employeeId={{ employee_id }}">{{ name }}</a></td>
+            <td><a href="employee.php?employeeId={{ employee_id }}">{{ name }}</a></td>
             <td>{{ surname }}</td>
             <td>{{ job }}</td>
             <td>{{ wage }}</td>
             <td><a href="room.php?roomId={{ room_id }}">{{ room }}</a></td>
             <td>
-                <form class="mt-2" method="post" action="edit.php">
-                    <input type="hidden" name="room_id" value="{{room_id}}" />
+                <form class="mt-2" method="post" action="editEmployee.php">
+                    <input type="hidden" name="employee_id" value="{{room_id}}" />
                     <input type="submit" value="Editovat" class="btn btn-info" {{^admining}}disabled{{/admining}} />
                 </form>
             </td>

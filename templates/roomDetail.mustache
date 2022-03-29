@@ -1,0 +1,25 @@
+
+{{#warning}}<h1>{{warning}}</h1>{{/warning}}
+
+{{# room }}
+<h1>Místnost: {{name}}</h1>
+<table class="table table-striped">
+    <tr>
+        <th>Room number: </th>
+        <td>{{no}}</td>
+    </tr>
+    <tr>
+        <th>Room phone: </th>
+        <td>{{phone}}</td>
+    </tr>
+    <tr>
+        <th colspan="2"><h3>Klíče: </h3></th>
+    </tr>
+    {{#employees}}
+    <tr>
+        <th></th>
+        <td><a href="employee.php?employeeId={{id}}">{{name}} {{surname}}</a></td>
+    </tr>
+    {{/employees}}
+</table>
+{{/ room }}

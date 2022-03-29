@@ -9,7 +9,7 @@ final class CurrentPage extends BaseDBPage {
     protected function body(): string
     {
 
-        if($_SESSION["name"])
+        if(isset($_SESSION["name"]))
             header("Location: ./profil.php");
 
         if(isset($_POST["login"]))

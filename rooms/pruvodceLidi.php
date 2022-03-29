@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {
@@ -31,7 +30,7 @@ final class CurrentPage extends BaseDBPage {
             ];
         }
 
-        return $this->m->render("employeeList", ["employees" => $employees, "room" => "", "admining" => $_SESSION["admin"]]);
+        return $this->m->render("employeeList", ["employees" => $employees, "room" => "", "admining" => isset($_SESSION["admin"]) ? $_SESSION["admin"] : false]);
     }
 }
 

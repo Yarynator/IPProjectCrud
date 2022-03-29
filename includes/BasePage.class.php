@@ -39,7 +39,7 @@ abstract class BasePage
 
     protected function header() : string {
 
-        return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders, logined => $_SESSION["name"]]);
+        return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders, "logined" => isset($_SESSION["name"]) ? $_SESSION["name"] : false]);
     }
 
     abstract protected function body() : string;

@@ -13,6 +13,10 @@ final class CurrentPage extends BaseDBPage {
         {
             $name = $_SESSION["name"];
             $newColor = mb_strtolower($_POST["color"]);
+
+            $newColor = htmlspecialchars($newColor);
+
+
             $stmt = $this->pdo->prepare("UPDATE employee SET color='$newColor' WHERE login='$name'");
             $stmt->execute([]);
             header("Location: ./profil.php");

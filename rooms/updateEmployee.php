@@ -2,15 +2,14 @@
 require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {
-    protected string $title = "Login";
+
+    protected string $title = "Update Employee";
 
     protected function body(): string
     {
-        if(isset($_SESSION["name"]))
-            header("Location: ./profil.php");
-
-        return $this->m->render("register");
+        return "";
     }
+
 }
 
 (new CurrentPage())->render();
