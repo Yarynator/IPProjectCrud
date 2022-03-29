@@ -3,7 +3,7 @@ session_start();
 require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {
-    protected string $title = "Výpis místnosti";
+    protected string $title = "Výpis zaměstnance";
     private string $warning;
     private stdClass $room;
     private Array $employees = [];

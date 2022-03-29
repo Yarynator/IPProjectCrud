@@ -2,9 +2,10 @@
 {{#employees}}
 <h1>Úprava karty <span class="text-uppercase">{{name}} {{surname}}</span></h1>
 
-<form action="updateEmployee" method="post">
+<form action="edit" method="post">
     <table>
         <tr>
+            <input type="hidden" name="id" value="{{employee_id}}">
             <td><label for="name">Name: </label></td>
             <td><input type="text" id="name" name="name" value="{{name}}"></td>
         </tr>
@@ -24,17 +25,13 @@
             <td><label for="room">Room Id: </label></td>
             <td><select name="room" id="room">
                 {{#rooms}}
-                    <option value="{{rooms_id}}">{{name}}</option>
+                    <option value="{{room_id}}">{{name}}</option>
                 {{/rooms}}
             </select></td>
         </tr>
         <tr>
             <td><label for="login">Login: </label></td>
             <td><input type="text" id="login" name="login" value="{{login}}"></td>
-        </tr>
-        <tr>
-            <td><label for="password">Password: </label></td>
-            <td><input type="text" id="password" name="password"}"></td>
         </tr>
         <tr>
             <td><label for="admin">Is Admin? </label></td>
@@ -45,7 +42,10 @@
         </tr>
     </table>
 </form>
-{{/employees}}
-{{^employees}}
-    <h1>fslk</h1>
+
+<form action="changePassword" method="post">
+    <input type="hidden" name="id" value="{{employee_id}}">
+    <input class="btn btn-secondary mt-5" type="submit" value="Resetovat heslo uživateli">
+    <p class="alert alert-secondary mt-2">Heslo bude nastaveno na 'Hesl0'</p>
+</form>
 {{/employees}}

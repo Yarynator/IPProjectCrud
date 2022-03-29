@@ -3,26 +3,33 @@ require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage
 {
-    protected string $title = "Profil";
+    protected string $title = "Edit Employee";
+    private stdClass $employee;
+    private array $rooms;
 
-
-    protected function body(): string
+    protected function setUp(): void
     {
-        RoomModel::checkLogined();
+        parent::setUp();
+
+        BasePage::checkLogined();
 
         if(!isset($_POST["employee_id"]))
-            header("Location: ./pruvodceLidi.php");
+            header("Location: ./index.php");
 
-        $warning = "";
         $id = $_POST["employee_id"];
 
         $stmt = $this->pdo->prepare("SELECT * FROM employee WHERE employee_id='$id'");
         $stmt->execute([]);
+        $this->employee = $stmt->fetch();
 
         $stmt2 = $this->pdo->prepare("SELECT room_id, name FROM room");
         $stmt2->execute([]);
+        $this->rooms = $stmt2->fetchAll();
+    }
 
-        return $this->m->render("editEmployee", ["employees" => $stmt, "rooms" => $stmt2, "warning" => $warning]);
+    protected function body(): string
+    {
+        return $this->m->render("editEmployee", ["employees" => $this->employee, "rooms" => $this->rooms]);
     }
 }
 
