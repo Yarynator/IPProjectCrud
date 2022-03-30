@@ -49,3 +49,38 @@
     <p class="alert alert-secondary mt-2">Heslo bude nastaveno na 'Hesl0'</p>
 </form>
 {{/employees}}
+
+
+
+<table class="table">
+    <tr>
+        <td colspan="2"><h3>Aktuální klíče: </h3></td>
+    </tr>
+    {{#keys}}
+    <tr>
+        <td>{{room}}</td>
+        <td>
+            <form action="./removeKey" method="post">
+                <input type="hidden" value="{{id}}" name="key">
+                <input type="submit" value="Odebrat" class="btn btn-danger">
+            </form></td>
+    </tr>
+    {{/keys}}
+</table>
+
+<table class="table">
+    <tr>
+        <td colspan="2"><h3>Přidat klíč: </h3></td>
+    </tr>
+    {{#avaibleRooms}}
+        <tr>
+            <td>{{name}}</td>
+            <td>
+                <form action="./addKey" method="post">
+                    <input type="hidden" value="{{employee}}" name="employee">
+                    <input type="hidden" value="{{id}}" name="key">
+                    <input type="submit" value="Přidat" class="btn btn-success">
+                </form></td>
+        </tr>
+    {{/avaibleRooms}}
+</table>

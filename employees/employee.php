@@ -6,7 +6,7 @@ final class CurrentPage extends BaseDBPage {
     private string $warning;
     private stdClass $employee;
     private stdClass $room;
-    private array $rooms;
+    private array $rooms = [];
 
     protected function setUp(): void
     {
