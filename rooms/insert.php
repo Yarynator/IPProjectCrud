@@ -31,6 +31,8 @@ final class CurrentPage extends BaseDBPage {
     {
         parent::setUp();
 
+        BasePage::checkLogined();
+
         $this->state = $this->getState();
 
         if ($this->state == self::STATE_PROCESSED) {
@@ -68,8 +70,6 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
-        BasePage::checkLogined();
-
         if(!$_SESSION["admin"])
             header("Location: ./");
 

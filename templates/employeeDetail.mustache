@@ -1,0 +1,29 @@
+
+{{#warning}}<h1>{{warning}}</h1>{{/warning}}
+
+{{# employee }}
+<h1>Informace o zaměstnanci: {{name}} {{surname}}</h1>
+<table class="table table-striped">
+    <tr>
+        <th>Job: </th>
+        <td>{{job}}</td>
+    </tr>
+    <tr>
+        <th>Wage: </th>
+        <td>{{wage}}</td>
+    </tr>
+    <tr>
+        <th>Room: </th>
+        <td>{{roomName}}</td>
+    </tr>
+    <tr>
+        <th colspan="2"><h3>Klíče: </h3></th>
+    </tr>
+    {{#keys}}
+        <tr>
+            <th></th>
+            <td><a href="../rooms/room?roomId={{id}}">{{name}}</a></td>
+        </tr>
+    {{/keys}}
+</table>
+{{/ employee }}

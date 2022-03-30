@@ -1,0 +1,42 @@
+<h1>Přidat zaměstnance</h1>
+<form method="post" action="insert">
+    <table>
+        <tr>
+            <td>Name: </td>
+            <td><input type="text" required name="name"></td>
+        </tr>
+        <tr>
+            <td>Surname: </td>
+            <td><input type="text" required name="surname"></td>
+        </tr>
+        <tr>
+            <td>Job: </td>
+            <td><input type="text" required name="job"></td>
+        </tr>
+        <tr>
+            <td>Wage: </td>
+            <td><input type="number" required name="wage"></td>
+        </tr>
+        <tr>
+            <td>Room: </td>
+            <td>
+                <select name="room" id="room">
+                    {{#rooms}}
+                        <option value="{{room_id}}">{{name}}</option>
+                    {{/rooms}}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="admin">Is Admin?</label></td>
+            <td><input type="checkbox" name="admin"></td>
+        </tr>
+        <tr>
+            <td><label for="color">Color:</label></td>
+            <td><input type="text" name="color"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Přidat zaměstnance" class="btn btn-primary mt-2"></td>
+        </tr>
+    </table>
+</form>
