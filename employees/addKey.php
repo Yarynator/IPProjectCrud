@@ -11,10 +11,10 @@ final class CurrentPage extends BaseDBPage
         BasePage::checkLogined();
 
         $employee = $_POST["employee"];
-        $key = $_POST["key"];
+        $room = $_POST["room"];
 
-        $stmt = $this->pdo->prepare("INSERT INTO `key` (employee, room) VALUES ((SELECT employee_id FROM employee WHERE employee_id=?), (SELECT room_id FROM room WHERE room_id=?))");
-        $stmt->execute([$employee, $key]);
+        $stmt = $this->pdo->prepare("INSERT INTO `key` (employee, room) VALUES (?, ?)");
+        $stmt->execute([$employee, $room]);
     }
 
     protected function body(): string

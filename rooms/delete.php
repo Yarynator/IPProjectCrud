@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {

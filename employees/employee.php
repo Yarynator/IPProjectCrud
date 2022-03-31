@@ -41,8 +41,6 @@ final class CurrentPage extends BaseDBPage {
                     $this->rooms[] = ["id" => $id, "name" => $e->name];
                 }
             }
-
-
         }
 
     }

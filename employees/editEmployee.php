@@ -24,7 +24,7 @@ final class CurrentPage extends BaseDBPage
         $stmt->execute([]);
         $this->employee = $stmt->fetch();
 
-        $stmt2 = $this->pdo->prepare("SELECT room_id, name FROM room");
+        $stmt2 = $this->pdo->prepare("SELECT room_id, name, no FROM room");
         $stmt2->execute([]);
         $this->rooms = $stmt2->fetchAll();
 
@@ -33,23 +33,24 @@ final class CurrentPage extends BaseDBPage
 
         foreach ($keysStmt->fetchAll() as $key)
         {
-            $roomStmt = $this->pdo->prepare("SELECT name FROM room WHERE room_id=?");
+            $roomStmt = $this->pdo->prepare("SELECT name, no FROM room WHERE room_id=?");
             $roomStmt->execute([$key->room]);
 
-            $this->keys[] = ["id" => $key->key_id, "room" => $roomStmt->fetch()->name, "employee_id" => $id];
+            $row = $roomStmt->fetch();
+
+            $this->keys[] = ["id" => $key->key_id, "room" => $row->name, "employee_id" => $id, "no" =>$row->no];
         }
 
         foreach ($this->rooms as $r) {
             $t = true;
             foreach ($this->keys as $k) {
-                if($r->name === $k["room"])
+                if ($r->name === $k["room"])
                     $t = false;
             }
-            if($t)
-                $this->avaibleRooms[] = $r;
+            if ($t) {
+                $this->avaibleRooms[] = ["room" => $r->room_id, "employee" => $id, "room_name" => $r->name, "no" => $r->no];
+            }
         }
-
-
     }
 
     protected function body(): string

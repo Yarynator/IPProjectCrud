@@ -83,10 +83,20 @@ final class RoomModel
 
         $query = "DELETE FROM room WHERE room_id=:roomId";
 
-        $stmt = DB::getConnection()->prepare($query);
-        $stmt->bindParam(':roomId', $room_id);
+        $stmtEmployee = DB::getConnection()->prepare("SELECT * FROM employee WHERE room=?");
+        $stmtEmployee->execute([$room_id]);
+        if($stmtEmployee->rowCount() == 0) {
 
-        return $stmt->execute();
+            $stmtKeys = DB::getConnection()->prepare("DELETE FROM `key` WHERE room=?");
+            $stmtKeys->execute([$room_id]);
+
+            $stmt = DB::getConnection()->prepare($query);
+            $stmt->bindParam(':roomId', $room_id);
+
+            return $stmt->execute();
+        }
+
+        return false;
     }
 
     public static function findById(int $room_id) : ?RoomModel
