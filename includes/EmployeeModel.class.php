@@ -41,7 +41,7 @@ final class EmployeeModel
         $this->room = $room;
         $this->login = $employeeData['login'] ?? null;
         $this->password = $employeeData['password'] ?? null;
-        $this->admin = $employeeData['admin'] !== null ? $employeeData['admin'] : false;
+        $this->admin = isset($employeeData['admin']) ? $employeeData['admin'] : false;
     }
 
     public function validate() : bool

@@ -49,6 +49,7 @@ final class CurrentPage extends BaseDBPage {
             if ($isOk) {
                 //uložit
                 if(isset($_POST["room_id"])) {
+
                     if ($this->room->update()) {
                         //přesměruj, ohlas úspěch
                         $this->redirect(self::RESULT_SUCCESS);
@@ -76,6 +77,8 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
+        dump($this->room);
+
         if ($this->state == self::STATE_FORM_REQUESTED)
             return $this->m->render(
                 "roomForm",

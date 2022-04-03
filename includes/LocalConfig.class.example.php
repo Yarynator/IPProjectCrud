@@ -8,5 +8,5 @@ class LocalConfig
     public const DBDATABASE = "";
     public const DBPASSWORD = "";
 
-    public const DEBUG = true;
+    public const DEBUG = false;
 }
