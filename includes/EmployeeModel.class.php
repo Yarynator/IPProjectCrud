@@ -21,6 +21,7 @@ final class EmployeeModel
 
     public function __construct(array $employeeData = [])
     {
+
         $id = $employeeData['employee_id'] ?? null;
         $wage = $employeeData['wage'] ?? 0;
         $room = $employeeData['room'] ?? null;
@@ -40,7 +41,7 @@ final class EmployeeModel
         $this->room = $room;
         $this->login = $employeeData['login'] ?? null;
         $this->password = $employeeData['password'] ?? null;
-        $this->admin = $employeeData['admin'];
+        $this->admin = $employeeData['admin'] !== null ? $employeeData['admin'] : false;
     }
 
     public function validate() : bool
@@ -66,7 +67,7 @@ final class EmployeeModel
 
         if(!$this->password)
         {
-            $this->login = null;
+            $this->password = null;
         }
 
         return $isOk;
@@ -74,15 +75,19 @@ final class EmployeeModel
 
     public function insert() : bool
     {
-        $query = "INSERT INTO emplooyee (name, surname, job, wage, room, admin) VALUES (:name, :surname, :job, :wage, :room, :admin)";
+
+        $query = "INSERT INTO employee (name, surname, job, wage, room, admin) VALUES (:name, :surname, :job, :wage, :room, :admin)";
+        $adminValue = $this->admin ? 1 : 0;
 
         $stmt = DB::getConnection()->prepare($query);
+
+
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':surname', $this->surname);
         $stmt->bindParam(':job', $this->job);
         $stmt->bindParam(':wage', $this->wage);
         $stmt->bindParam(':room', $this->room);
-        $stmt->bindParam(':admin', $this->admin);
+        $stmt->bindParam(':admin', $adminValue);
 
         if (!$stmt->execute())
             return false;
@@ -91,9 +96,10 @@ final class EmployeeModel
         return true;
     }
 
-    public function update() : bool
+    public function updateEmployee() : bool
     {
-        $query = "UPDATE emplooyee SET name=:name, surname=:surname, job=:job, wage=:wage, room=:room, login=:login, admin=:admin WHERE employee_id=:employeeId";
+        $query = "UPDATE employee SET name=:name, surname=:surname, job=:job, wage=:wage, room=:room, login=:login, admin=:admin WHERE employee_id=:employeeId";
+        $adminValue = $this->admin ? 1 : 0;
 
         $stmt = DB::getConnection()->prepare($query);
         $stmt->bindParam(':employeeId', $this->employee_id);
@@ -103,7 +109,19 @@ final class EmployeeModel
         $stmt->bindParam(':wage', $this->wage);
         $stmt->bindParam(':room', $this->room);
         $stmt->bindParam(':login', $this->login);
-        $stmt->bindParam(':admin', $this->admin);
+        $stmt->bindParam(':admin', $adminValue);
+
+        return $stmt->execute();
+    }
+
+    public function resetPasswordById(int $employee_id) : bool
+    {
+        $query = "UPDATE employee SET password=:password WHERE employee_id=:employeeId";
+        $password = password_hash("Hesl0", PASSWORD_BCRYPT);
+
+        $stmt = DB::getConnection()->prepare($query);
+        $stmt->bindParam(':employeeId', $employee_id);
+        $stmt->bindParam(':password', $password);
 
         return $stmt->execute();
     }
@@ -127,6 +145,54 @@ final class EmployeeModel
         return $stmt->execute();
     }
 
+    public static function getActiveKeys(int $employee_id) : array {
+        $query = "SELECT * FROM `key` WHERE employee=:employeeId";
+
+        $stmt = DB::getConnection()->prepare($query);
+        $stmt->bindParam(':employeeId', $employee_id);
+
+        $stmt->execute();
+
+        $keys = [];
+        foreach ($stmt->fetchAll() as $key) {
+            $roomStmt = DB::getConnection()->prepare("SELECT name, no FROM room WHERE room_id=:roomId");
+            $roomStmt->bindParam('roomId', $key->room);
+
+            $roomStmt->execute();
+
+            $row = $roomStmt->fetch();
+
+            $keys[] = ["id" => $key->key_id, "room" => $row->name, "employee_id" => employee_id, "no" =>$row->no];
+        }
+
+        return $keys;
+    }
+
+    public static function getAvaibleKeys(int $employee_id) : array {
+        $roomStmt = DB::getConnection()->prepare("SELECT name, room_id, no FROM room");
+        $roomStmt->execute();
+        $rooms = $roomStmt->fetchAll();
+
+        $keyStmt = DB::getConnection()->prepare("SELECT * FROM `key` WHERE employee=:employeeId");
+        $keyStmt->bindParam(":employeeId", $employee_id);
+        $keyStmt->execute();
+        $keys = $keyStmt->fetchAll();
+
+        $avaible = [];
+        foreach ($rooms as $r) {
+            $t = true;
+            foreach ($keys as $k) {
+                if ($r->name === $k->room)
+                    $t = false;
+            }
+            if ($t) {
+                $avaible[] = ["room" => $r->room_id, "employee" => $employee_id, "room_name" => $r->name, "no" => $r->no];
+            }
+        }
+
+        return $avaible;
+    }
+
     public static function findById(int $employee_id) : ?EmployeeModel
     {
         $query = "SELECT * FROM employee WHERE employee_id=:employeeId";
@@ -144,7 +210,7 @@ final class EmployeeModel
         return new self($dbData);
     }
 
-    public static function readPostData() : RoomModel
+    public static function readPostData() : EmployeeModel
     {
         return new self($_POST); //není úplně košer, nefiltruju
     }

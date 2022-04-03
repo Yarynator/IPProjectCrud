@@ -18,7 +18,7 @@
             <td>{{ wage }}</td>
             <td><a href="../rooms/room.php?roomId={{ room_id }}">{{ room }}</a></td>
             <td>
-                <form class="mt-2" method="post" action="editEmployee.php">
+                <form class="mt-2" method="post" action="update.php">
                     <input type="hidden" name="employee_id" value="{{employee_id}}" />
                     <input type="submit" value="Editovat" class="btn btn-info" {{^admining}}disabled{{/admining}} />
                 </form>
@@ -27,4 +27,4 @@
     {{/ employees }}
     </tbody>
 </table>
-<a href="./insertEmployee.php" class="btn btn-primary mb-2">Přidat osobu</a>
+<a href="./insert.php" class="btn btn-primary mb-2">Přidat osobu</a>

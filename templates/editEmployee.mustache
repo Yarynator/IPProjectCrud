@@ -2,24 +2,33 @@
 {{#employees}}
 <h1>Úprava karty <span class="text-uppercase">{{name}} {{surname}}</span></h1>
 
-<form action="edit" method="post">
+<form method="post">
     <table>
         <tr>
-            <input type="hidden" name="id" value="{{employee_id}}">
+            <input type="hidden" name="employee_id" value="{{employee_id}}">
             <td><label for="name">Name: </label></td>
-            <td><input type="text" id="name" name="name" value="{{name}}"></td>
+            <td>
+                <input type="text" id="name" name="name" value="{{name}}">
+                {{#errors.name}}<small class="text-danger">{{errors.name}}</small>{{/errors.name}}
+            </td>
         </tr>
         <tr>
             <td><label for="surname">Surname: </label></td>
-            <td><input type="text" id="surname" name="surname" value="{{surname}}"></td>
+            <td>
+                <input type="text" id="surname" name="surname" value="{{surname}}">
+                {{#errors.surname}}<small class="text-danger">{{errors.surname}}</small>{{/errors.surname}}
+            </td>
         </tr>
         <tr>
             <td><label for="job">Job: </label></td>
-            <td><input type="text" id="job" name="job" value="{{job}}"></td>
+            <td>
+                <input type="text" id="job" name="job" value="{{job}}">
+                {{#errors.job}}<small class="text-danger">{{errors.job}}</small>{{/errors.job}}
+            </td>
         </tr>
         <tr>
             <td><label for="wage">Wage: </label></td>
-            <td><input type="text" id="wage" name="wage" value="{{wage}}"></td>
+            <td><input type="number" id="wage" name="wage" value="{{wage}}"></td>
         </tr>
         <tr>
             <td><label for="room">Room Id: </label></td>
@@ -38,19 +47,22 @@
             <td><input type="checkbox" id="admin" name="admin"></td>
         </tr>
         <tr>
-            <td><input class="btn btn-primary" type="submit" value="Upravit"></td>
+            <td>
+                <input type="hidden" name="action" value="{{action}}" />
+                <input type="submit" value="{{action}}" class="btn btn-primary" />
+            </td>
         </tr>
     </table>
 </form>
 
 <form action="changePassword" method="post">
-    <input type="hidden" name="id" value="{{employee_id}}">
+    <input type="hidden" name="employee_id" value="{{employee_id}}">
     <input class="btn btn-secondary mt-5" type="submit" value="Resetovat heslo uživateli">
     <p class="alert alert-secondary mt-2">Heslo bude nastaveno na 'Hesl0'</p>
 </form>
 
-<form action="removeEmployee" method="post" class="mb-3" onsubmit="return confirm('Really delete employee?\nAction cannot be undone!')">
-    <input type="hidden" name="id" value="{{employee_id}}">
+<form action="delete" method="post" class="mb-3" onsubmit="return confirm('Really delete employee?\nAction cannot be undone!')">
+    <input type="hidden" name="employee_id" value="{{employee_id}}">
     <input class="btn btn-danger" type="submit" value="Odstranit zaměstnance">
 </form>
 {{/employees}}
@@ -59,7 +71,7 @@
     <tr>
         <td colspan="2"><h3>Aktuální klíče: </h3></td>
     </tr>
-    {{#keys}}
+    {{#activeKeys}}
     <tr>
         <td>{{room}} ({{no}})</td>
         <td>
@@ -68,7 +80,7 @@
                 <input type="submit" value="Odebrat" class="btn btn-danger">
             </form></td>
     </tr>
-    {{/keys}}
+    {{/activeKeys}}
 </table>
 
 <table class="table">

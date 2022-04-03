@@ -31,7 +31,8 @@ final class CurrentPage extends BaseDBPage {
     {
         parent::setUp();
 
-        RoomModel::checkLogined();
+        if(!$_SESSION["admin"])
+            header("Location: ./");
 
         $this->state = $this->getState();
 
@@ -49,11 +50,15 @@ final class CurrentPage extends BaseDBPage {
             //když jsou validní
 
             //uložit
-            if (RoomModel::deleteById($roomId)) {
-                //přesměruj, ohlas úspěch
-                $this->redirect(self::RESULT_SUCCESS);
+            if(isset($roomId)) {
+                if (RoomModel::deleteById($roomId)) {
+                    //přesměruj, ohlas úspěch
+                    $this->redirect(self::RESULT_SUCCESS);
+                } else {
+                    //přesměruj, ohlas chybu
+                    $this->redirect(self::RESULT_FAIL);
+                }
             } else {
-                //přesměruj, ohlas chybu
                 $this->redirect(self::RESULT_FAIL);
             }
 

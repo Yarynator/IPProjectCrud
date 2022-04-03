@@ -2,13 +2,11 @@
 require "../includes/bootstrap.inc.php";
 
 final class CurrentPage extends BaseDBPage {
-    protected string $title = "Výpis místností";
+    protected string $title = "Výpis zaměstnanců";
     private array $employees;
 
-    protected function setUp(): void
+    protected function body(): string
     {
-        parent::setUp();
-
         BasePage::checkLogined();
 
         $stmt = $this->pdo->prepare("SELECT * FROM `employee` ORDER BY `name`");
@@ -31,14 +29,8 @@ final class CurrentPage extends BaseDBPage {
                 "room_id" => $room_id
             ];
         }
-    }
 
-    protected function body(): string
-    {
-
-
-
-        return $this->m->render("employeeList", ["employees" => $this->employees, "room" => "", "admining" => isset($_SESSION["admin"]) ? $_SESSION["admin"] : false]);
+        return $this->m->render("employeeList", ["employees" => $this->employees, "admining" => isset($_SESSION["admin"]) ? $_SESSION["admin"] : false]);
     }
 }
 

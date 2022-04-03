@@ -15,16 +15,15 @@ final class CurrentPage extends BaseDBPage {
     {
 
         $name = $_SESSION["name"];
-        $stmt = $this->pdo->prepare("SELECT name, color, admin FROM employee WHERE login='$name'");
+        $stmt = $this->pdo->prepare("SELECT name, admin FROM employee WHERE login='$name'");
         $stmt->execute([]);
 
         $stmt = $stmt->fetch();
 
         $userName = $stmt->name;
-        $color = $stmt->color;
         $admin = $stmt->admin;
 
-        return $this->m->render("profil", ["name" => $userName, "color" => $color, "admin" => $admin]);
+        return $this->m->render("profil", ["name" => $userName, "admin" => $admin]);
     }
 }
 

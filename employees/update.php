@@ -11,7 +11,7 @@ final class CurrentPage extends BaseDBPage {
     const RESULT_FAIL = 2;
 
     private int $state;
-    private RoomModel $room;
+    private EmployeeModel $employee;
     private int $result = 0;
 
     //když nepřišla data a není hlášení o výsledku, chci zobrazit formulář
@@ -23,13 +23,16 @@ final class CurrentPage extends BaseDBPage {
     public function __construct()
     {
         parent::__construct();
-        $this->title = "New room";
+        $this->title = "Update Employee";
     }
 
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        if(!$_SESSION["admin"])
+            header("Location: ./");
 
         $this->state = $this->getState();
 
@@ -40,16 +43,16 @@ final class CurrentPage extends BaseDBPage {
             //přišla data
             //načíst
 
-            $this->room = RoomModel::readPostData();
+            $this->employee = EmployeeModel::readPostData();;
 
             //validovat
-            $isOk = $this->room->validate();
+            $isOk = $this->employee->validate();
 
             //když jsou validní
             if ($isOk) {
-                //uložit
-                if(isset($_POST["room_id"])) {
-                    if ($this->room->update()) {
+                if(isset($_POST["employee_id"])) {
+                    //uložit
+                    if ($this->employee->updateEmployee()) {
                         //přesměruj, ohlas úspěch
                         $this->redirect(self::RESULT_SUCCESS);
                     } else {
@@ -64,9 +67,9 @@ final class CurrentPage extends BaseDBPage {
             $this->state = self::STATE_FORM_REQUESTED;
         } else {
             $this->state = self::STATE_FORM_REQUESTED;
-            $roomId = filter_input(INPUT_POST, "room_id");
-            if($roomId)
-                $this->room = RoomModel::findById($roomId);
+            $employeeId = filter_input(INPUT_POST, "employee_id");
+            if($employeeId)
+                $this->employee = EmployeeModel::findById($employeeId);
             else
                 $this->redirect(self::RESULT_FAIL);
         }
@@ -76,20 +79,26 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
+        $stmt = $this->pdo->prepare("SELECT name, room_id FROM room");
+        $stmt->execute();
+
         if ($this->state == self::STATE_FORM_REQUESTED)
             return $this->m->render(
-                "roomForm",
+                "editEmployee",
                 [
-                    'room' => $this->room,
-                    'errors' => $this->room->getValidationErrors(),
-                    'action' => "update"
+                    'employees' => $this->employee,
+                    'errors' => $this->employee->getValidationErrors(),
+                    'action' => "update",
+                    'rooms' => $stmt,
+                    "activeKeys" => EmployeeModel::getActiveKeys($this->employee->employee_id),
+                    "avaibleRooms" => EmployeeModel::getAvaibleKeys($this->employee->employee_id)
                 ]);
         elseif ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->m->render("roomSuccess", ['message' => "Room updated successfully."]);
+                return $this->m->render("roomSuccess", ['message' => "Employee updated successfully."]);
             } else {
-                return $this->m->render("roomFail", ['message' => "Room update failed."]);
+                return $this->m->render("roomFail", ['message' => "Employee update failed."]);
             }
         }
         return "";
