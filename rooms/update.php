@@ -77,8 +77,6 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
-        dump($this->room);
-
         if ($this->state == self::STATE_FORM_REQUESTED)
             return $this->m->render(
                 "roomForm",
