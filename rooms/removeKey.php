@@ -23,7 +23,7 @@ final class CurrentPage extends BaseDBPage {
         BasePage::checkLogined();
 
         parent::__construct();
-        $this->title = "Delete Employee";
+        $this->title = "Remove Key";
     }
 
 
@@ -43,20 +43,21 @@ final class CurrentPage extends BaseDBPage {
             //přišla data
             //načíst
 
-            $employeeId = filter_input(INPUT_POST, "employee_id");
+            $key = filter_input(INPUT_POST, "key");
 
-            if($employeeId) {
-                if (EmployeeModel::deleteById($employeeId)) {
-                    //přesměruj, ohlas úspěch
-                    $this->redirect(self::RESULT_SUCCESS);
-                } else {
-                    //přesměruj, ohlas chybu
-                    $this->redirect(self::RESULT_FAIL);
-                }
-            } else {
+            //validovat
+
+            //když jsou validní
+
+            //uložit
+
+            $stmt = $this->pdo->prepare("DELETE FROM `key` WHERE key_id=:key");
+            $stmt->bindParam(":key", $key);
+
+            if(!$stmt->execute())
                 $this->redirect(self::RESULT_FAIL);
-            }
 
+            $this->redirect(self::RESULT_SUCCESS);
         }
 
     }
@@ -67,9 +68,9 @@ final class CurrentPage extends BaseDBPage {
         if ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->m->render("employeeSuccess", ['message' => "Employee deleted successfully."]);
+                return $this->m->render("employeeSuccess", ['message' => "Key remove successfully."]);
             } else {
-                return $this->m->render("employeeFail", ['message' => "Employee deletion failed."]);
+                return $this->m->render("employeeFail", ['message' => "Key remove failed."]);
             }
         }
         return "";

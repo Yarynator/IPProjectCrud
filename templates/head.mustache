@@ -24,11 +24,11 @@
     </div>
     <div>
         {{^logined}}
-        <a href="../admin/login" class="btn btn-secondary">Login<a/>
+        <a href="../admin/login.php" class="btn btn-secondary">Login<a/>
         {{/logined}}
         {{#logined}}
-            <a href="../admin/profil" class="btn btn-secondary">Profil</a>
-            <form style="display: inline-block" action="../admin/logout" method="post">
+            <a href="../admin/profil.php" class="btn btn-secondary">Profil</a>
+            <form style="display: inline-block" action="../admin/logout.php" method="post">
                 <button class="btn btn-secondary">Logout</button>
             </form>
         {{/logined}}

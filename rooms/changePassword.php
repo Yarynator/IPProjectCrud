@@ -23,7 +23,7 @@ final class CurrentPage extends BaseDBPage {
         BasePage::checkLogined();
 
         parent::__construct();
-        $this->title = "Delete Employee";
+        $this->title = "Reset Password";
     }
 
 
@@ -45,8 +45,13 @@ final class CurrentPage extends BaseDBPage {
 
             $employeeId = filter_input(INPUT_POST, "employee_id");
 
+            //validovat
+
+            //když jsou validní
+
+            //uložit
             if($employeeId) {
-                if (EmployeeModel::deleteById($employeeId)) {
+                if (EmployeeModel::resetPasswordById($employeeId)) {
                     //přesměruj, ohlas úspěch
                     $this->redirect(self::RESULT_SUCCESS);
                 } else {
@@ -67,9 +72,9 @@ final class CurrentPage extends BaseDBPage {
         if ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->m->render("employeeSuccess", ['message' => "Employee deleted successfully."]);
+                return $this->m->render("employeeSuccess", ['message' => "Employee password reset successfully."]);
             } else {
-                return $this->m->render("employeeFail", ['message' => "Employee deletion failed."]);
+                return $this->m->render("employeeFail", ['message' => "Employee password reset failed."]);
             }
         }
         return "";

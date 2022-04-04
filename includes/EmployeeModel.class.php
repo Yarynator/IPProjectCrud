@@ -162,7 +162,7 @@ final class EmployeeModel
 
             $row = $roomStmt->fetch();
 
-            $keys[] = ["id" => $key->key_id, "room" => $row->name, "employee_id" => employee_id, "no" =>$row->no];
+            $keys[] = ["id" => $key->key_id, "room" => $row->name, "employee_id" => $employee_id, "no" =>$row->no];
         }
 
         return $keys;

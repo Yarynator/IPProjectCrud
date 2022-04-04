@@ -12,8 +12,8 @@ final class CurrentPage extends BaseDBPage {
 
         RoomModel::checkLogined();
 
-        $this->warning = $_SESSION["changePassWarn"] ? $_SESSION["changePassWarn"] : "";
-        $this->message = $_SESSION["changePassMess"] ? $_SESSION["changePassMess"] : "";
+        $this->warning = isset($_SESSION["changePassWarn"]) ? $_SESSION["changePassWarn"] : "";
+        $this->message = isset($_SESSION["changePassMess"]) ? $_SESSION["changePassMess"] : "";
         $_SESSION["changePassWarn"] = "";
         $_SESSION["changePassMess"] = "";
     }

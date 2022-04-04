@@ -34,7 +34,7 @@ final class CurrentPage extends BaseDBPage {
 
         $_SESSION["changePassWarn"] = $this->warning;
         $_SESSION["changePassMess"] = $this->message;
-        header("Location: ./changePassword");
+        header("Location: ./changePassword.php");
     }
 
     protected function body(): string

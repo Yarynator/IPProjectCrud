@@ -61,7 +61,7 @@
     <p class="alert alert-secondary mt-2">Heslo bude nastaveno na 'Hesl0'</p>
 </form>
 
-<form action="delete" method="post" class="mb-3" onsubmit="return confirm('Really delete employee?\nAction cannot be undone!')">
+<form action="delete.php" method="post" class="mb-3" onsubmit="return confirm('Really delete employee?\nAction cannot be undone!')">
     <input type="hidden" name="employee_id" value="{{employee_id}}">
     <input class="btn btn-danger" type="submit" value="Odstranit zaměstnance">
 </form>
@@ -75,7 +75,7 @@
     <tr>
         <td>{{room}} ({{no}})</td>
         <td>
-            <form action="./removeKey" method="post">
+            <form action="./removeKey.php" method="post">
                 <input type="hidden" value="{{id}}" name="key">
                 <input type="submit" value="Odebrat" class="btn btn-danger">
             </form></td>
@@ -91,7 +91,7 @@
         <tr>
             <td>{{room_name}} ({{no}})</td>
             <td>
-                <form action="./addKey" method="post">
+                <form action="./addKey.php" method="post">
                     <input type="hidden" value="{{employee}}" name="employee">
                     <input type="hidden" value="{{room}}" name="room">
                     <input type="submit" value="Přidat" class="btn btn-success">
